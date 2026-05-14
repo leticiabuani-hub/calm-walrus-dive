@@ -17,11 +17,15 @@ import { MadeWithDyad } from "@/components/made-with-dyad";
 const Index = () => {
   const [currentStep, setCurrentStep] = useState(2);
 
+  const handleStepChange = (step: number) => {
+    setCurrentStep(step);
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
       
-      {/* Demo Step Switcher */}
+      {/* Demo Step Switcher (Mantido para facilitar testes rápidos) */}
       <div className="bg-white border-b border-gray-100 py-2">
         <div className="container mx-auto px-4 flex items-center justify-center gap-2">
           <Settings size={14} className="text-gray-400" />
@@ -29,7 +33,7 @@ const Index = () => {
           {[1, 2, 3, 4, 5, 6].map(step => (
             <button 
               key={step}
-              onClick={() => setCurrentStep(step)}
+              onClick={() => handleStepChange(step)}
               className={`w-8 h-8 rounded-full text-xs font-bold transition-all ${currentStep === step ? 'bg-primary text-white' : 'bg-gray-100 text-gray-400 hover:bg-gray-200'}`}
             >
               {step}
@@ -74,10 +78,10 @@ const Index = () => {
                 Sua Jornada <span className="text-primary">Foodlover</span>
               </h2>
               <div className="hidden md:flex items-center gap-2 text-xs font-bold text-gray-400 uppercase">
-                <Info size={14} /> Clique nas etapas para ver detalhes
+                <Info size={14} /> Clique nas etapas para navegar
               </div>
             </div>
-            <CandidateTrail />
+            <CandidateTrail currentStep={currentStep} onStepClick={handleStepChange} />
           </div>
         </section>
 
@@ -86,20 +90,20 @@ const Index = () => {
             <section>
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-xl font-bold">Ações Necessárias</h2>
-                <span className="px-3 py-1 bg-red-100 text-primary text-xs font-black rounded-full">
-                  ETAPA {currentStep}: {
-                    currentStep === 1 ? 'APLICAÇÃO' :
-                    currentStep === 2 ? 'ENTREVISTA IA' :
-                    currentStep === 3 ? 'RECRUTADOR' :
-                    currentStep === 4 ? 'CASE TÉCNICO' :
-                    currentStep === 5 ? 'GESTOR' : 'OFERTA'
+                <span className="px-3 py-1 bg-red-100 text-primary text-xs font-black rounded-full uppercase">
+                  {
+                    currentStep === 1 ? 'Aplicação' :
+                    currentStep === 2 ? 'Entrevista IA' :
+                    currentStep === 3 ? 'Recrutador' :
+                    currentStep === 4 ? 'Case Técnico' :
+                    currentStep === 5 ? 'Gestor' : 'Oferta'
                   }
                 </span>
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {currentStep === 1 && (
-                  <div className="md:col-span-2 bg-white rounded-3xl p-10 text-center border border-gray-100">
+                  <div className="md:col-span-2 bg-white rounded-3xl p-10 text-center border border-gray-100 animate-in fade-in slide-in-from-bottom-4">
                     <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center text-green-500 mx-auto mb-6">
                       <Info size={40} />
                     </div>
@@ -112,7 +116,7 @@ const Index = () => {
 
                 {currentStep === 2 && (
                   <>
-                    <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-3xl p-8 text-white ifood-shadow relative overflow-hidden">
+                    <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-3xl p-8 text-white ifood-shadow relative overflow-hidden animate-in fade-in slide-in-from-left-4">
                       <div className="relative z-10">
                         <div className="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center mb-6">
                           <Sparkles className="text-primary" size={24} />
@@ -127,13 +131,15 @@ const Index = () => {
                       </div>
                       <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-primary/10 rounded-full blur-3xl"></div>
                     </div>
-                    <CulturalFitTest />
+                    <div className="animate-in fade-in slide-in-from-right-4">
+                      <CulturalFitTest />
+                    </div>
                   </>
                 )}
 
                 {currentStep === 3 && (
                   <>
-                    <div className="bg-white rounded-3xl p-8 ifood-shadow border border-gray-50">
+                    <div className="bg-white rounded-3xl p-8 ifood-shadow border border-gray-50 animate-in fade-in slide-in-from-left-4">
                       <div className="flex items-center gap-3 mb-6">
                         <div className="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600">
                           <Users size={20} />
@@ -150,14 +156,18 @@ const Index = () => {
                       <p className="text-sm text-gray-600 mb-6">Ricardo quer entender suas motivações e alinhar expectativas de carreira.</p>
                       <Button className="w-full bg-primary text-white rounded-full">Agendar Conversa</Button>
                     </div>
-                    <GlobalScheduler />
+                    <div className="animate-in fade-in slide-in-from-right-4">
+                      <GlobalScheduler />
+                    </div>
                   </>
                 )}
 
                 {currentStep === 4 && (
                   <>
-                    <TechnicalCase />
-                    <div className="bg-white rounded-3xl p-8 ifood-shadow border border-gray-50 flex flex-col justify-center items-center text-center">
+                    <div className="animate-in fade-in slide-in-from-left-4">
+                      <TechnicalCase />
+                    </div>
+                    <div className="bg-white rounded-3xl p-8 ifood-shadow border border-gray-50 flex flex-col justify-center items-center text-center animate-in fade-in slide-in-from-right-4">
                       <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center text-gray-300 mb-4">
                         <Clock size={32} />
                       </div>
@@ -169,7 +179,7 @@ const Index = () => {
 
                 {currentStep === 5 && (
                   <>
-                    <div className="bg-white rounded-3xl p-8 ifood-shadow border border-gray-50">
+                    <div className="bg-white rounded-3xl p-8 ifood-shadow border border-gray-50 animate-in fade-in slide-in-from-left-4">
                       <div className="flex items-center gap-3 mb-6">
                         <div className="w-10 h-10 bg-orange-50 rounded-xl flex items-center justify-center text-orange-600">
                           <Briefcase size={20} />
@@ -186,12 +196,14 @@ const Index = () => {
                       <p className="text-sm text-gray-600 mb-6">Foco em desafios de negócio, arquitetura e liderança técnica.</p>
                       <Button className="w-full bg-primary text-white rounded-full">Escolher Horário</Button>
                     </div>
-                    <GlobalScheduler />
+                    <div className="animate-in fade-in slide-in-from-right-4">
+                      <GlobalScheduler />
+                    </div>
                   </>
                 )}
 
                 {currentStep === 6 && (
-                  <div className="md:col-span-2">
+                  <div className="md:col-span-2 animate-in zoom-in-95 duration-500">
                     <OfferDetails />
                   </div>
                 )}
@@ -199,7 +211,7 @@ const Index = () => {
             </section>
 
             {currentStep < 6 && (
-              <section>
+              <section className="animate-in fade-in duration-700">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-xl font-bold">Agendamento & Logística</h2>
                 </div>
