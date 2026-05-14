@@ -9,20 +9,36 @@ import WhatsAppAgent from '@/components/WhatsAppAgent';
 import GlobalScheduler from '@/components/GlobalScheduler';
 import TechnicalCase from '@/components/TechnicalCase';
 import GreenhouseStatus from '@/components/GreenhouseStatus';
-import { MapPin, Clock, ExternalLink, ChevronRight, Sparkles, Info } from 'lucide-react';
+import OfferDetails from '@/components/OfferDetails';
+import { MapPin, Clock, ExternalLink, ChevronRight, Sparkles, Info, Users, Briefcase, Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { MadeWithDyad } from "@/components/made-with-dyad";
 
 const Index = () => {
-  // Simulação de estado da etapa atual (1 a 6)
   const [currentStep, setCurrentStep] = useState(2);
 
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
       
+      {/* Demo Step Switcher */}
+      <div className="bg-white border-b border-gray-100 py-2">
+        <div className="container mx-auto px-4 flex items-center justify-center gap-2">
+          <Settings size={14} className="text-gray-400" />
+          <span className="text-[10px] font-bold text-gray-400 uppercase mr-2">Demo Mode:</span>
+          {[1, 2, 3, 4, 5, 6].map(step => (
+            <button 
+              key={step}
+              onClick={() => setCurrentStep(step)}
+              className={`w-8 h-8 rounded-full text-xs font-bold transition-all ${currentStep === step ? 'bg-primary text-white' : 'bg-gray-100 text-gray-400 hover:bg-gray-200'}`}
+            >
+              {step}
+            </button>
+          ))}
+        </div>
+      </div>
+
       <main className="flex-1 container mx-auto px-4 py-8">
-        {/* Hero Section */}
         <section className="mb-12">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
             <div>
@@ -66,18 +82,34 @@ const Index = () => {
         </section>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left Column: Actions */}
           <div className="lg:col-span-2 space-y-8">
             <section>
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-xl font-bold">Ações Necessárias</h2>
                 <span className="px-3 py-1 bg-red-100 text-primary text-xs font-black rounded-full">
-                  ETAPA {currentStep}: ENTREVISTA IA
+                  ETAPA {currentStep}: {
+                    currentStep === 1 ? 'APLICAÇÃO' :
+                    currentStep === 2 ? 'ENTREVISTA IA' :
+                    currentStep === 3 ? 'RECRUTADOR' :
+                    currentStep === 4 ? 'CASE TÉCNICO' :
+                    currentStep === 5 ? 'GESTOR' : 'OFERTA'
+                  }
                 </span>
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Conteúdo dinâmico baseado na etapa */}
+                {currentStep === 1 && (
+                  <div className="md:col-span-2 bg-white rounded-3xl p-10 text-center border border-gray-100">
+                    <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center text-green-500 mx-auto mb-6">
+                      <Info size={40} />
+                    </div>
+                    <h3 className="text-2xl font-bold mb-2">Aplicação Recebida!</h3>
+                    <p className="text-gray-500 max-w-md mx-auto">
+                      Seu currículo já está com nosso time. Enquanto isso, que tal completar seu perfil de Fit Cultural?
+                    </p>
+                  </div>
+                )}
+
                 {currentStep === 2 && (
                   <>
                     <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-3xl p-8 text-white ifood-shadow relative overflow-hidden">
@@ -99,6 +131,29 @@ const Index = () => {
                   </>
                 )}
 
+                {currentStep === 3 && (
+                  <>
+                    <div className="bg-white rounded-3xl p-8 ifood-shadow border border-gray-50">
+                      <div className="flex items-center gap-3 mb-6">
+                        <div className="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600">
+                          <Users size={20} />
+                        </div>
+                        <h3 className="text-lg font-bold">Papo com Recrutador</h3>
+                      </div>
+                      <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-2xl mb-6">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" className="w-12 h-12 rounded-full" alt="Ricardo" />
+                        <div>
+                          <p className="font-bold text-sm">Ricardo Silva</p>
+                          <p className="text-xs text-gray-500">Tech Talent Acquisition</p>
+                        </div>
+                      </div>
+                      <p className="text-sm text-gray-600 mb-6">Ricardo quer entender suas motivações e alinhar expectativas de carreira.</p>
+                      <Button className="w-full bg-primary text-white rounded-full">Agendar Conversa</Button>
+                    </div>
+                    <GlobalScheduler />
+                  </>
+                )}
+
                 {currentStep === 4 && (
                   <>
                     <TechnicalCase />
@@ -111,21 +166,51 @@ const Index = () => {
                     </div>
                   </>
                 )}
+
+                {currentStep === 5 && (
+                  <>
+                    <div className="bg-white rounded-3xl p-8 ifood-shadow border border-gray-50">
+                      <div className="flex items-center gap-3 mb-6">
+                        <div className="w-10 h-10 bg-orange-50 rounded-xl flex items-center justify-center text-orange-600">
+                          <Briefcase size={20} />
+                        </div>
+                        <h3 className="text-lg font-bold">Entrevista com Gestor</h3>
+                      </div>
+                      <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-2xl mb-6">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Ane" className="w-12 h-12 rounded-full" alt="Gestora" />
+                        <div>
+                          <p className="font-bold text-sm">Ana Oliveira</p>
+                          <p className="text-xs text-gray-500">Engineering Manager</p>
+                        </div>
+                      </div>
+                      <p className="text-sm text-gray-600 mb-6">Foco em desafios de negócio, arquitetura e liderança técnica.</p>
+                      <Button className="w-full bg-primary text-white rounded-full">Escolher Horário</Button>
+                    </div>
+                    <GlobalScheduler />
+                  </>
+                )}
+
+                {currentStep === 6 && (
+                  <div className="md:col-span-2">
+                    <OfferDetails />
+                  </div>
+                )}
               </div>
             </section>
 
-            <section>
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-bold">Agendamento & Logística</h2>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <GlobalScheduler />
-                <SmartMatcher />
-              </div>
-            </section>
+            {currentStep < 6 && (
+              <section>
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-xl font-bold">Agendamento & Logística</h2>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {currentStep !== 3 && currentStep !== 5 && <GlobalScheduler />}
+                  <SmartMatcher />
+                </div>
+              </section>
+            )}
           </div>
 
-          {/* Right Column: Sidebar Info */}
           <div className="space-y-8">
             <section className="bg-primary rounded-3xl p-8 text-white relative overflow-hidden">
               <div className="relative z-10">
