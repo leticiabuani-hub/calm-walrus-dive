@@ -3,29 +3,32 @@
 import React, { useState } from 'react';
 import Header from '@/components/Header';
 import CandidateTrail from '@/components/CandidateTrail';
-import SmartMatcher from '@/components/SmartMatcher';
+import JobBoard from '@/components/JobBoard';
 import CulturalFitTest from '@/components/CulturalFitTest';
+import AIInterview from '@/components/AIInterview';
 import WhatsAppAgent from '@/components/WhatsAppAgent';
 import GlobalScheduler from '@/components/GlobalScheduler';
 import TechnicalCase from '@/components/TechnicalCase';
 import GreenhouseStatus from '@/components/GreenhouseStatus';
 import OfferDetails from '@/components/OfferDetails';
-import { MapPin, Clock, ExternalLink, ChevronRight, Sparkles, Info, Users, Briefcase, Settings } from 'lucide-react';
+import { MapPin, Clock, ExternalLink, Sparkles, Info, Users, Briefcase, Settings, Heart, CheckCircle2, Code } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { MadeWithDyad } from "@/components/made-with-dyad";
 
 const Index = () => {
-  const [currentStep, setCurrentStep] = useState(2);
+  const [currentStep, setCurrentStep] = useState(1);
+  const [culturalScore, setCulturalScore] = useState<number | null>(null);
 
   const handleStepChange = (step: number) => {
     setCurrentStep(step);
+    if (step !== 2) setCulturalScore(null);
   };
 
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
       
-      {/* Demo Step Switcher (Mantido para facilitar testes rápidos) */}
+      {/* Demo Step Switcher */}
       <div className="bg-white border-b border-gray-100 py-2">
         <div className="container mx-auto px-4 flex items-center justify-center gap-2">
           <Settings size={14} className="text-gray-400" />
@@ -49,16 +52,16 @@ const Index = () => {
               <div className="flex items-center gap-3 mb-2">
                 <div className="flex items-center gap-2 text-primary font-bold text-sm">
                   <span className="w-2 h-2 bg-primary rounded-full animate-pulse"></span>
-                  Candidatura Ativa
+                  {currentStep === 1 ? 'Explorando Oportunidades' : 'Candidatura Ativa'}
                 </div>
                 <GreenhouseStatus />
               </div>
               <h1 className="text-3xl md:text-4xl font-black text-gray-900 mb-2">
-                Engenheiro de Software Sênior
+                {currentStep === 1 ? 'Trabalhe no iFood' : 'Engenheiro de Software Sênior'}
               </h1>
               <div className="flex flex-wrap items-center gap-4 text-gray-500 text-sm">
                 <span className="flex items-center gap-1.5"><MapPin size={16} /> Remoto (Brasil)</span>
-                <span className="flex items-center gap-1.5"><Clock size={16} /> Aplicado há 2 dias</span>
+                {currentStep > 1 && <span className="flex items-center gap-1.5"><Clock size={16} /> Aplicado há 2 dias</span>}
                 <span className="px-2 py-0.5 bg-gray-100 rounded text-[10px] font-bold uppercase">ID: #88291</span>
               </div>
             </div>
@@ -93,9 +96,9 @@ const Index = () => {
                 <span className="px-3 py-1 bg-red-100 text-primary text-xs font-black rounded-full uppercase">
                   {
                     currentStep === 1 ? 'Aplicação' :
-                    currentStep === 2 ? 'Entrevista IA' :
+                    currentStep === 2 ? 'Fit + IA' :
                     currentStep === 3 ? 'Recrutador' :
-                    currentStep === 4 ? 'Case Técnico' :
+                    currentStep === 4 ? 'Técnica' :
                     currentStep === 5 ? 'Gestor' : 'Oferta'
                   }
                 </span>
@@ -103,37 +106,33 @@ const Index = () => {
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {currentStep === 1 && (
-                  <div className="md:col-span-2 bg-white rounded-3xl p-10 text-center border border-gray-100 animate-in fade-in slide-in-from-bottom-4">
-                    <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center text-green-500 mx-auto mb-6">
-                      <Info size={40} />
-                    </div>
-                    <h3 className="text-2xl font-bold mb-2">Aplicação Recebida!</h3>
-                    <p className="text-gray-500 max-w-md mx-auto">
-                      Seu currículo já está com nosso time. Enquanto isso, que tal completar seu perfil de Fit Cultural?
-                    </p>
+                  <div className="md:col-span-2 animate-in fade-in slide-in-from-bottom-4">
+                    <JobBoard />
                   </div>
                 )}
 
                 {currentStep === 2 && (
                   <>
-                    <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-3xl p-8 text-white ifood-shadow relative overflow-hidden animate-in fade-in slide-in-from-left-4">
-                      <div className="relative z-10">
-                        <div className="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center mb-6">
-                          <Sparkles className="text-primary" size={24} />
-                        </div>
-                        <h3 className="text-xl font-bold mb-2">Entrevista com IA</h3>
-                        <p className="text-gray-400 text-sm mb-8 leading-relaxed">
-                          Nossa IA quer te conhecer melhor. É um papo rápido de 15 min sobre suas experiências técnicas.
-                        </p>
-                        <Button className="w-full bg-primary hover:bg-primary/90 text-white rounded-full py-6 font-bold text-lg">
-                          Iniciar Entrevista Agora
-                        </Button>
+                    {!culturalScore ? (
+                      <div className="md:col-span-2 animate-in fade-in slide-in-from-left-4">
+                        <CulturalFitTest onComplete={(score) => setCulturalScore(score)} />
                       </div>
-                      <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-primary/10 rounded-full blur-3xl"></div>
-                    </div>
-                    <div className="animate-in fade-in slide-in-from-right-4">
-                      <CulturalFitTest />
-                    </div>
+                    ) : (
+                      <>
+                        <div className="bg-white rounded-3xl p-8 ifood-shadow border border-gray-50 text-center animate-in zoom-in-95">
+                          <div className="w-20 h-20 bg-red-50 rounded-full flex items-center justify-center text-primary mx-auto mb-6">
+                            <Heart size={40} fill="currentColor" />
+                          </div>
+                          <h3 className="text-2xl font-bold mb-2">Seu DNA Foodlover</h3>
+                          <p className="text-gray-500 mb-8">Resultado do seu Fit Cultural</p>
+                          <div className="text-5xl font-black text-primary mb-4">{culturalScore}%</div>
+                          <p className="text-sm text-gray-400 italic">Excelente aderência aos nossos valores!</p>
+                        </div>
+                        <div className="animate-in fade-in slide-in-from-right-4">
+                          <AIInterview />
+                        </div>
+                      </>
+                    )}
                   </>
                 )}
 
@@ -144,7 +143,7 @@ const Index = () => {
                         <div className="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600">
                           <Users size={20} />
                         </div>
-                        <h3 className="text-lg font-bold">Papo com Recrutador</h3>
+                        <h3 className="text-lg font-bold">Entrevista com Recrutador</h3>
                       </div>
                       <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-2xl mb-6">
                         <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" className="w-12 h-12 rounded-full" alt="Ricardo" />
@@ -168,11 +167,16 @@ const Index = () => {
                       <TechnicalCase />
                     </div>
                     <div className="bg-white rounded-3xl p-8 ifood-shadow border border-gray-50 flex flex-col justify-center items-center text-center animate-in fade-in slide-in-from-right-4">
-                      <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center text-gray-300 mb-4">
-                        <Clock size={32} />
+                      <div className="w-16 h-16 bg-purple-50 rounded-full flex items-center justify-center text-purple-600 mb-4">
+                        <Code size={32} />
                       </div>
-                      <h3 className="font-bold text-gray-400">Aguardando Revisão</h3>
-                      <p className="text-xs text-gray-400 mt-2">O agendamento com o gestor será liberado após a aprovação do case.</p>
+                      <h3 className="font-bold text-gray-800">Processo Flexível</h3>
+                      <p className="text-sm text-gray-500 mt-2 leading-relaxed">
+                        Este processo varia conforme a vaga — pode ser entrevista técnica, case ou outro formato.
+                      </p>
+                      <div className="mt-6 p-3 bg-gray-50 rounded-xl inline-flex items-center gap-2 text-xs font-medium text-gray-400">
+                        Aguardando definição do time técnico
+                      </div>
                     </div>
                   </>
                 )}
@@ -210,13 +214,13 @@ const Index = () => {
               </div>
             </section>
 
-            {currentStep < 6 && (
+            {currentStep !== 1 && currentStep < 6 && (
               <section className="animate-in fade-in duration-700">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-xl font-bold">Agendamento & Logística</h2>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {currentStep !== 3 && currentStep !== 5 && <GlobalScheduler />}
+                  {(currentStep === 2 || currentStep === 4) && <GlobalScheduler />}
                   <SmartMatcher />
                 </div>
               </section>
@@ -243,20 +247,28 @@ const Index = () => {
               </div>
             </section>
 
-            <section className="bg-white rounded-3xl p-6 ifood-shadow border border-gray-50">
-              <h3 className="font-bold mb-4">Seu Recrutador</h3>
-              <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-2xl">
-                <div className="w-12 h-12 bg-gray-200 rounded-full overflow-hidden">
-                  <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="Recrutador" />
+            <section className="bg-white rounded-3xl p-8 ifood-shadow border border-gray-50">
+              <h3 className="text-lg font-bold mb-6">Por que o iFood?</h3>
+              <div className="space-y-6">
+                <div className="flex gap-4">
+                  <div className="w-10 h-10 bg-red-50 rounded-full flex items-center justify-center text-primary shrink-0">
+                    <Sparkles size={18} />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-sm">Inovação Constante</h4>
+                    <p className="text-xs text-gray-500 mt-1">Trabalhe com as tecnologias mais modernas do mercado.</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="font-bold text-sm">Ricardo Silva</p>
-                  <p className="text-xs text-gray-500">Tech Talent Acquisition</p>
+                <div className="flex gap-4">
+                  <div className="w-10 h-10 bg-green-50 rounded-full flex items-center justify-center text-green-600 shrink-0">
+                    <CheckCircle2 size={18} />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-sm">Impacto Real</h4>
+                    <p className="text-xs text-gray-500 mt-1">Sua solução chega na ponta para milhões de brasileiros.</p>
+                  </div>
                 </div>
               </div>
-              <p className="text-xs text-gray-400 mt-4 leading-relaxed">
-                "Ricardo está acompanhando sua jornada. Qualquer dúvida sobre o processo, pode chamar no chat!"
-              </p>
             </section>
           </div>
         </div>

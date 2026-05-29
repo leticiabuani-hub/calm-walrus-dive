@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { Gift, CheckCircle2, TrendingUp, Heart, Coffee, Plane } from 'lucide-react';
+import { Gift, CheckCircle2, TrendingUp, Heart, Coffee, Plane, BarChart3 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const OfferDetails = () => {
@@ -28,6 +28,36 @@ const OfferDetails = () => {
           <p className="text-3xl font-black text-gray-900">1.200 <span className="text-sm font-medium text-gray-500">units</span></p>
           <p className="text-xs text-primary font-bold mt-1">Vesting de 4 anos</p>
         </div>
+      </div>
+
+      {/* Comparação de Mercado */}
+      <div className="mb-8 p-6 bg-blue-50 rounded-3xl border border-blue-100">
+        <h4 className="font-bold text-blue-900 flex items-center gap-2 mb-4">
+          <BarChart3 size={18} /> Comparação com o Mercado
+        </h4>
+        <div className="space-y-4">
+          <div>
+            <div className="flex justify-between text-xs font-bold mb-1">
+              <span className="text-blue-700">Sua Proposta iFood</span>
+              <span className="text-blue-900">Top 5%</span>
+            </div>
+            <div className="h-3 bg-blue-200 rounded-full overflow-hidden">
+              <div className="h-full bg-blue-600 w-[95%] rounded-full"></div>
+            </div>
+          </div>
+          <div>
+            <div className="flex justify-between text-xs font-bold mb-1">
+              <span className="text-gray-500">Média do Mercado (Sênior)</span>
+              <span className="text-gray-700">R$ 14.200</span>
+            </div>
+            <div className="h-3 bg-gray-200 rounded-full overflow-hidden">
+              <div className="h-full bg-gray-400 w-[70%] rounded-full"></div>
+            </div>
+          </div>
+        </div>
+        <p className="text-[10px] text-blue-600 font-medium mt-4 italic">
+          *Dados baseados em pesquisas salariais recentes para o setor de tecnologia no Brasil.
+        </p>
       </div>
 
       <div className="space-y-4 mb-8">
