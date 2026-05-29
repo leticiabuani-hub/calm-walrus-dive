@@ -3,16 +3,15 @@
 import React, { useState } from 'react';
 import Header from '@/components/Header';
 import CandidateTrail from '@/components/CandidateTrail';
-import SmartMatcher from '@/components/SmartMatcher';
 import CulturalFitTest from '@/components/CulturalFitTest';
 import AIInterview from '@/components/AIInterview';
-import WhatsAppAgent from '@/components/WhatsAppAgent';
+import CandidacyTracker from '@/components/CandidacyTracker';
 import GlobalScheduler from '@/components/GlobalScheduler';
 import TechnicalCase from '@/components/TechnicalCase';
 import GreenhouseStatus from '@/components/GreenhouseStatus';
 import OfferDetails from '@/components/OfferDetails';
 import JobBoard from '@/components/JobBoard';
-import { MapPin, Clock, ExternalLink, Sparkles, Info, Users, Briefcase, Settings, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { MapPin, Clock, ExternalLink, Info, Users, Briefcase, Settings, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { MadeWithDyad } from "@/components/made-with-dyad";
 
@@ -59,10 +58,9 @@ const Index = () => {
               <h1 className="text-3xl md:text-4xl font-black text-gray-900 mb-2">
                 {currentStep === 1 ? 'Encontre seu lugar no iFood' : 'Engenheiro de Software Sênior'}
               </h1>
-              <div className="flex flex-wrap items-center gap-4 text-gray-500 text-sm">
+              <div className="flex flex-wrap items-center gap-4 text-gray-500 text-sm font-bold">
                 <span className="flex items-center gap-1.5"><MapPin size={16} /> Remoto (Brasil)</span>
                 {currentStep > 1 && <span className="flex items-center gap-1.5"><Clock size={16} /> Aplicado há 2 dias</span>}
-                <span className="px-2 py-0.5 bg-gray-100 rounded text-[10px] font-black uppercase tracking-widest">ID: #88291</span>
               </div>
             </div>
             {currentStep > 1 && (
@@ -135,7 +133,7 @@ const Index = () => {
                         </div>
                       </div>
                       <p className="text-sm text-gray-600 mb-8 leading-relaxed">Ricardo quer entender suas motivações, alinhar expectativas de carreira e tirar suas dúvidas sobre o iFood.</p>
-                      <Button className="w-full bg-primary text-white rounded-full py-6 font-bold">Agendar Conversa</Button>
+                      <Button className="w-full bg-primary text-white rounded-full py-6 font-bold ifood-button-shadow">Agendar Conversa</Button>
                     </div>
                     <GlobalScheduler />
                   </div>
@@ -175,7 +173,7 @@ const Index = () => {
                         </div>
                       </div>
                       <p className="text-sm text-gray-600 mb-8 leading-relaxed">Foco em desafios de negócio, arquitetura e liderança técnica. É o momento de aprofundar no dia a dia do time.</p>
-                      <Button className="w-full bg-primary text-white rounded-full py-6 font-bold">Escolher Horário</Button>
+                      <Button className="w-full bg-primary text-white rounded-full py-6 font-bold ifood-button-shadow">Escolher Horário</Button>
                     </div>
                     <GlobalScheduler />
                   </div>
@@ -188,18 +186,6 @@ const Index = () => {
                 )}
               </div>
             </section>
-
-            {currentStep > 1 && currentStep < 6 && (
-              <section className="animate-in fade-in duration-700">
-                <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-2xl font-black text-gray-900">Logística</h2>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {currentStep !== 3 && currentStep !== 5 && <GlobalScheduler />}
-                  <SmartMatcher />
-                </div>
-              </section>
-            )}
           </div>
 
           <div className="space-y-8">
@@ -233,9 +219,9 @@ const Index = () => {
                 ].map((item, i) => (
                   <div key={i} className="flex items-center gap-3">
                     <div className={`w-5 h-5 rounded-full flex items-center justify-center ${item.done ? 'bg-green-500 text-white' : 'bg-gray-100 text-gray-400'}`}>
-                      {item.done ? <CheckCircle2 size={12} /> : <span className="text-[10px] font-bold">{item.step}</span>}
+                      {item.done ? <span className="text-[8px]">✓</span> : <span className="text-[10px] font-bold">{item.step}</span>}
                     </div>
-                    <span className={`text-sm font-medium ${item.done ? 'text-gray-400 line-through' : 'text-gray-700'}`}>{item.text}</span>
+                    <span className={`text-sm font-bold ${item.done ? 'text-gray-400 line-through' : 'text-gray-700'}`}>{item.text}</span>
                   </div>
                 ))}
               </div>
@@ -244,7 +230,7 @@ const Index = () => {
         </div>
       </main>
 
-      <WhatsAppAgent />
+      <CandidacyTracker />
       <MadeWithDyad />
     </div>
   );
