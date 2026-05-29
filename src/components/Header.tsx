@@ -16,15 +16,17 @@ const Header = () => {
     <header className="bg-white border-b border-gray-100 sticky top-0 z-50">
       <div className="container mx-auto px-4 h-20 flex items-center justify-between">
         <div className="flex items-center gap-8">
-          <div className="flex items-center gap-2">
-            <div className="bg-primary w-10 h-10 rounded-xl flex items-center justify-center text-white font-black italic text-2xl">
-              i
-            </div>
-            <span className="text-2xl font-black tracking-tighter text-primary">food</span>
-            <span className="text-xs font-bold text-gray-400 uppercase tracking-widest ml-2 pt-1">Carreiras</span>
+          <div className="flex items-center gap-3">
+            <img 
+              src="/src/assets/ifood-logo.png" 
+              alt="iFood Logo" 
+              className="h-8 w-auto object-contain"
+            />
+            <div className="h-6 w-[1px] bg-gray-200 mx-1 hidden sm:block"></div>
+            <span className="text-xs font-bold text-gray-400 uppercase tracking-widest pt-1 hidden sm:block">Carreiras</span>
           </div>
           
-          <nav className="hidden md:flex items-center gap-6">
+          <nav className="hidden lg:flex items-center gap-6">
             {['Vagas', 'Nossa Cultura', 'Benefícios', 'Sobre Nós'].map((item) => (
               <a key={item} href="#" className="text-sm font-bold text-gray-500 hover:text-primary transition-colors">
                 {item}
