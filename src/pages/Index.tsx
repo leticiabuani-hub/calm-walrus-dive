@@ -12,7 +12,7 @@ import TechnicalCase from '@/components/TechnicalCase';
 import GreenhouseStatus from '@/components/GreenhouseStatus';
 import OfferDetails from '@/components/OfferDetails';
 import JobBoard from '@/components/JobBoard';
-import { MapPin, Clock, ExternalLink, Sparkles, Info, Users, Briefcase, Settings, AlertCircle } from 'lucide-react';
+import { MapPin, Clock, ExternalLink, Sparkles, Info, Users, Briefcase, Settings, AlertCircle, CheckCircle2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { MadeWithDyad } from "@/components/made-with-dyad";
 
