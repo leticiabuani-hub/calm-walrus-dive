@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Briefcase, MapPin, Clock, Search, Upload, CheckCircle2, AlertCircle, ArrowRight, FileText, Sparkles } from 'lucide-react';
+import { Briefcase, MapPin, Clock, Search, Upload, CheckCircle2, AlertCircle, ArrowRight, FileText, Sparkles, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Progress } from '@/components/ui/progress';
@@ -180,6 +180,32 @@ const JobBoard = () => {
             </DialogContent>
           </Dialog>
         ))}
+      </div>
+
+      {/* Talent Pool Section */}
+      <div className="bg-primary rounded-[2.5rem] p-8 md:p-12 text-white relative overflow-hidden mt-12">
+        <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+          <div className="max-w-md text-center md:text-left">
+            <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center mb-6 mx-auto md:mx-0">
+              <Users size={32} />
+            </div>
+            <h3 className="text-3xl font-black mb-4">Não encontrou a vaga ideal?</h3>
+            <p className="text-white/80 font-medium leading-relaxed">
+              Entre para o nosso Banco de Talentos! Nós analisamos seu perfil e te avisamos assim que surgir uma oportunidade que seja a sua cara.
+            </p>
+          </div>
+          <div className="w-full md:w-auto">
+            <Button 
+              onClick={() => showSuccess("Inscrito no Banco de Talentos!")}
+              className="w-full md:w-auto bg-white text-primary hover:bg-white/90 rounded-full px-10 py-8 text-xl font-black shadow-xl"
+            >
+              Cadastrar Currículo 🚀
+            </Button>
+          </div>
+        </div>
+        {/* Decorative elements */}
+        <div className="absolute -right-20 -bottom-20 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+        <div className="absolute -left-10 -top-10 w-40 h-40 bg-white/5 rounded-full blur-2xl"></div>
       </div>
     </div>
   );
