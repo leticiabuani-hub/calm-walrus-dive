@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Briefcase, MapPin, Clock, Search, Upload, CheckCircle2, AlertCircle, ArrowRight, FileText, Sparkles, Users } from 'lucide-react';
+import { Briefcase, MapPin, Clock, Search, CheckCircle2, AlertCircle, ArrowRight, Sparkles, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Progress } from '@/components/ui/progress';
@@ -15,16 +15,12 @@ const jobs = [
 ];
 
 const JobBoard = () => {
-  const [step, setStep] = useState<'details' | 'upload' | 'analyzing' | 'result'>('details');
+  const [step, setStep] = useState<'details' | 'analyzing' | 'result'>('details');
   const [selectedJob, setSelectedJob] = useState<any>(null);
   const [analysisProgress, setAnalysisProgress] = useState(0);
 
   const startApplication = (job: any) => {
     setSelectedJob(job);
-    setStep('upload');
-  };
-
-  const handleUpload = () => {
     setStep('analyzing');
     let progress = 0;
     const interval = setInterval(() => {
@@ -34,7 +30,7 @@ const JobBoard = () => {
         clearInterval(interval);
         setStep('result');
       }
-    }, 200);
+    }, 150);
   };
 
   return (
@@ -102,24 +98,6 @@ const JobBoard = () => {
                 </div>
               )}
 
-              {step === 'upload' && (
-                <div className="p-8 text-center">
-                  <div className="w-20 h-20 bg-primary/5 rounded-full flex items-center justify-center text-primary mx-auto mb-6">
-                    <Upload size={32} />
-                  </div>
-                  <h3 className="text-xl font-black mb-2">Envie seu currículo</h3>
-                  <p className="text-sm text-gray-500 mb-8">Nossa IA vai analisar seu perfil em segundos para ver o match com a vaga.</p>
-                  <div 
-                    onClick={handleUpload}
-                    className="border-2 border-dashed border-gray-200 rounded-3xl p-10 hover:border-primary/50 hover:bg-primary/5 transition-all cursor-pointer mb-6"
-                  >
-                    <FileText className="mx-auto text-gray-300 mb-2" size={40} />
-                    <p className="text-sm font-bold text-gray-400">Clique ou arraste seu PDF aqui</p>
-                  </div>
-                  <Button variant="ghost" onClick={() => setStep('details')} className="text-gray-400 font-bold">Voltar</Button>
-                </div>
-              )}
-
               {step === 'analyzing' && (
                 <div className="p-12 text-center">
                   <div className="relative w-24 h-24 mx-auto mb-8">
@@ -129,8 +107,8 @@ const JobBoard = () => {
                       <Sparkles size={32} />
                     </div>
                   </div>
-                  <h3 className="text-xl font-black mb-2">Analisando Perfil...</h3>
-                  <p className="text-sm text-gray-500 mb-6">O Smart Matcher está comparando suas experiências com os requisitos do iFood.</p>
+                  <h3 className="text-xl font-black mb-2">Analisando Match...</h3>
+                  <p className="text-sm text-gray-500 mb-6">Usando seu currículo cadastrado para verificar a compatibilidade com a vaga.</p>
                   <Progress value={analysisProgress} className="h-2" />
                 </div>
               )}
@@ -203,7 +181,6 @@ const JobBoard = () => {
             </Button>
           </div>
         </div>
-        {/* Decorative elements */}
         <div className="absolute -right-20 -bottom-20 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
         <div className="absolute -left-10 -top-10 w-40 h-40 bg-white/5 rounded-full blur-2xl"></div>
       </div>

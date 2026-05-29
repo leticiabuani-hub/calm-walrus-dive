@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { Check, Circle } from 'lucide-react';
+import { Check } from 'lucide-react';
 
 interface Step {
   id: number;
@@ -16,12 +16,13 @@ interface CandidateTrailProps {
 
 const CandidateTrail = ({ currentStep, onStepClick }: CandidateTrailProps) => {
   const steps: Step[] = [
-    { id: 1, label: 'Aplicação', status: currentStep > 1 ? 'completed' : currentStep === 1 ? 'current' : 'upcoming' },
-    { id: 2, label: 'Fit Cultural', status: currentStep > 2 ? 'completed' : currentStep === 2 ? 'current' : 'upcoming' },
-    { id: 3, label: 'Recrutador', status: currentStep > 3 ? 'completed' : currentStep === 3 ? 'current' : 'upcoming' },
-    { id: 4, label: 'Técnica', status: currentStep > 4 ? 'completed' : currentStep === 4 ? 'current' : 'upcoming' },
-    { id: 5, label: 'Gestor', status: currentStep > 5 ? 'completed' : currentStep === 5 ? 'current' : 'upcoming' },
-    { id: 6, label: 'Oferta', status: currentStep === 6 ? 'current' : 'upcoming' },
+    { id: 1, label: 'Perfil', status: currentStep > 1 ? 'completed' : currentStep === 1 ? 'current' : 'upcoming' },
+    { id: 2, label: 'Aplicação', status: currentStep > 2 ? 'completed' : currentStep === 2 ? 'current' : 'upcoming' },
+    { id: 3, label: 'Fit Cultural', status: currentStep > 3 ? 'completed' : currentStep === 3 ? 'current' : 'upcoming' },
+    { id: 4, label: 'Recrutador', status: currentStep > 4 ? 'completed' : currentStep === 4 ? 'current' : 'upcoming' },
+    { id: 5, label: 'Técnica', status: currentStep > 5 ? 'completed' : currentStep === 5 ? 'current' : 'upcoming' },
+    { id: 6, label: 'Gestor', status: currentStep > 6 ? 'completed' : currentStep === 6 ? 'current' : 'upcoming' },
+    { id: 7, label: 'Oferta', status: currentStep === 7 ? 'current' : 'upcoming' },
   ];
 
   return (

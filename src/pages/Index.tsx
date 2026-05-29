@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Header from '@/components/Header';
 import CandidateTrail from '@/components/CandidateTrail';
+import ProfileCreation from '@/components/ProfileCreation';
 import CulturalFitTest from '@/components/CulturalFitTest';
 import AIInterview from '@/components/AIInterview';
 import CandidacyTracker from '@/components/CandidacyTracker';
@@ -21,7 +22,7 @@ const Index = () => {
 
   const handleStepChange = (step: number) => {
     setCurrentStep(step);
-    if (step !== 2) setFitCompleted(false);
+    if (step !== 3) setFitCompleted(false);
   };
 
   return (
@@ -32,7 +33,7 @@ const Index = () => {
         <div className="container mx-auto px-4 flex items-center justify-center gap-2">
           <Settings size={14} className="text-gray-400" />
           <span className="text-[10px] font-bold text-gray-400 uppercase mr-2">Demo Mode:</span>
-          {[1, 2, 3, 4, 5, 6].map(step => (
+          {[1, 2, 3, 4, 5, 6, 7].map(step => (
             <button 
               key={step}
               onClick={() => handleStepChange(step)}
@@ -51,19 +52,19 @@ const Index = () => {
               <div className="flex items-center gap-3 mb-2">
                 <div className="flex items-center gap-2 text-primary font-bold text-sm">
                   <span className="w-2 h-2 bg-primary rounded-full animate-pulse"></span>
-                  {currentStep === 1 ? 'Explorando Vagas' : 'Candidatura Ativa'}
+                  {currentStep === 1 ? 'Configurando Perfil' : currentStep === 2 ? 'Explorando Vagas' : 'Candidatura Ativa'}
                 </div>
-                {currentStep > 1 && <GreenhouseStatus />}
+                {currentStep > 2 && <GreenhouseStatus />}
               </div>
               <h1 className="text-3xl md:text-4xl font-black text-gray-900 mb-2">
-                {currentStep === 1 ? 'Encontre seu lugar no iFood' : 'Engenheiro de Software Sênior'}
+                {currentStep === 1 ? 'Bem-vindo ao iFood Carreiras' : currentStep === 2 ? 'Encontre seu lugar no iFood' : 'Engenheiro de Software Sênior'}
               </h1>
               <div className="flex flex-wrap items-center gap-4 text-gray-500 text-sm font-bold">
                 <span className="flex items-center gap-1.5"><MapPin size={16} /> Remoto (Brasil)</span>
-                {currentStep > 1 && <span className="flex items-center gap-1.5"><Clock size={16} /> Aplicado há 2 dias</span>}
+                {currentStep > 2 && <span className="flex items-center gap-1.5"><Clock size={16} /> Aplicado há 2 dias</span>}
               </div>
             </div>
-            {currentStep > 1 && (
+            {currentStep > 2 && (
               <div className="flex gap-3">
                 <Button variant="outline" className="rounded-full border-gray-200 gap-2 font-bold">
                   Ver Vaga <ExternalLink size={14} />
@@ -90,23 +91,25 @@ const Index = () => {
             <section>
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-2xl font-black text-gray-900">
-                  {currentStep === 1 ? 'Vagas Abertas' : 'Ações Necessárias'}
+                  {currentStep === 1 ? 'Criação de Perfil' : currentStep === 2 ? 'Vagas Abertas' : 'Ações Necessárias'}
                 </h2>
                 <span className="px-4 py-1.5 bg-primary/5 text-primary text-[10px] font-black rounded-full uppercase tracking-widest border border-primary/10">
                   {
-                    currentStep === 1 ? 'Aplicação' :
-                    currentStep === 2 ? 'Fit Cultural + IA' :
-                    currentStep === 3 ? 'Entrevista com Recrutador' :
-                    currentStep === 4 ? 'Técnica' :
-                    currentStep === 5 ? 'Gestor' : 'Oferta'
+                    currentStep === 1 ? 'Perfil' :
+                    currentStep === 2 ? 'Aplicação' :
+                    currentStep === 3 ? 'Fit Cultural + IA' :
+                    currentStep === 4 ? 'Entrevista com Recrutador' :
+                    currentStep === 5 ? 'Técnica' :
+                    currentStep === 6 ? 'Gestor' : 'Oferta'
                   }
                 </span>
               </div>
               
               <div className="grid grid-cols-1 gap-6">
-                {currentStep === 1 && <JobBoard />}
+                {currentStep === 1 && <ProfileCreation onComplete={() => setCurrentStep(2)} />}
+                {currentStep === 2 && <JobBoard />}
 
-                {currentStep === 2 && (
+                {currentStep === 3 && (
                   <div className="grid grid-cols-1 gap-6">
                     {!fitCompleted ? (
                       <CulturalFitTest onComplete={() => setFitCompleted(true)} />
@@ -116,7 +119,7 @@ const Index = () => {
                   </div>
                 )}
 
-                {currentStep === 3 && (
+                {currentStep === 4 && (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="bg-white rounded-[2.5rem] p-8 ifood-shadow border border-gray-50 animate-in fade-in slide-in-from-left-4">
                       <div className="flex items-center gap-3 mb-6">
@@ -139,7 +142,7 @@ const Index = () => {
                   </div>
                 )}
 
-                {currentStep === 4 && (
+                {currentStep === 5 && (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="animate-in fade-in slide-in-from-left-4">
                       <TechnicalCase />
@@ -156,7 +159,7 @@ const Index = () => {
                   </div>
                 )}
 
-                {currentStep === 5 && (
+                {currentStep === 6 && (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="bg-white rounded-[2.5rem] p-8 ifood-shadow border border-gray-50 animate-in fade-in slide-in-from-left-4">
                       <div className="flex items-center gap-3 mb-6">
@@ -179,7 +182,7 @@ const Index = () => {
                   </div>
                 )}
 
-                {currentStep === 6 && (
+                {currentStep === 7 && (
                   <div className="animate-in zoom-in-95 duration-500">
                     <OfferDetails />
                   </div>
@@ -213,9 +216,9 @@ const Index = () => {
               <h3 className="font-bold text-gray-900 mb-4">Próximos Passos</h3>
               <div className="space-y-4">
                 {[
-                  { step: 1, text: "Completar perfil", done: true },
-                  { step: 2, text: "Teste de Fit Cultural", done: currentStep > 2 },
-                  { step: 3, text: "Entrevista IA", done: currentStep > 2 && fitCompleted },
+                  { step: 1, text: "Completar perfil", done: currentStep > 1 },
+                  { step: 2, text: "Teste de Fit Cultural", done: currentStep > 3 },
+                  { step: 3, text: "Entrevista IA", done: currentStep > 3 && fitCompleted },
                 ].map((item, i) => (
                   <div key={i} className="flex items-center gap-3">
                     <div className={`w-5 h-5 rounded-full flex items-center justify-center ${item.done ? 'bg-green-500 text-white' : 'bg-gray-100 text-gray-400'}`}>
